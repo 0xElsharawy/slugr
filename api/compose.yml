@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    restart: no
+    networks:
+      - slugr-net
+    environment:
+      POSTGRES_USER: "slugr_user"
+      POSTGRES_PASSWORD: "slugr_password"
+      POSTGRES_DB: "slugr_db"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "slugr_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:
+
+networks:
+  slugr-net:
+    driver: bridge

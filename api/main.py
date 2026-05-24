@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.responses import RedirectResponse
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, AnyHttpUrl
@@ -38,6 +39,11 @@ def create_url(payload: CreateUrlRequest, db: Session = Depends(get_db)):
     return {"short_code": slug}
 
 
-@app.get("/:shortCode")
-async def redirect(short_code: str):
-    pass
+@app.get("/{short_code}")
+def redirect(short_code: str, db: Session = Depends(get_db)):
+    stmt = select(Url).where(Url.short_code == short_code)
+    url = db.execute(stmt).scalar_one_or_none()
+    print("URL:", url.url if url else "None")
+    if not url:
+        raise HTTPException(status_code=404, detail="URL not found")
+    return RedirectResponse(url.url)

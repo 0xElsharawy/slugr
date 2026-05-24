@@ -1,6 +1,13 @@
-def main():
-    print("Hello from api!")
+from fastapi import FastAPI
+
+from middlewares import logging
+
+app = FastAPI()
 
 
-if __name__ == "__main__":
-    main()
+app.add_middleware(logging.LoggingMiddleware)
+
+
+@app.get("/")
+def root():
+    return {"message": "Hello World"}

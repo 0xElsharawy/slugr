@@ -1,0 +1,11 @@
+# Default recipe to show available commands
+default:
+    @just --list
+
+# Start development server
+dev:
+    @uv run fastapi dev --port 8080
+
+# Migrate database
+migrate:
+    @uv run alembic upgrade head

@@ -1,7 +1,7 @@
 from sqlalchemy import String, Text, DateTime, BigInteger
 from sqlalchemy import func
 from sqlalchemy.orm import Mapped, mapped_column
-from db import Base
+from database.db import Base
 
 
 class Url(Base):

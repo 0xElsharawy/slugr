@@ -25,6 +25,18 @@ export function App() {
 
     try {
       setLoading(true);
+
+      let expire_in = "";
+      if (days) {
+        expire_in += `${days}d`;
+      }
+      if (hours) {
+        expire_in += `${hours}h`;
+      }
+      if (minutes) {
+        expire_in += `${minutes}m`;
+      }
+
       const response = await fetch(`${backendUrl}/urls`, {
         method: "POST",
 
@@ -34,6 +46,7 @@ export function App() {
 
         body: JSON.stringify({
           url,
+          expire_in,
         }),
       });
 
@@ -69,6 +82,7 @@ export function App() {
             minutes={minutes}
             setMinutes={setMinutes}
             onSubmit={handleSubmit}
+            loading={loading}
           />
         </div>
       </div>

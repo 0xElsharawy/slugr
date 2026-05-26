@@ -11,7 +11,6 @@ Frontend client for [Slugr](https://github.com/0xElsharawy/slugr), a URL shorten
 | [Preact](https://preactjs.com/) – React-compatible UI framework (3kB) | [Vite](https://vitejs.dev/) – Build tool & dev server                                      |
 | [TypeScript](https://www.typescriptlang.org/) – Strictly typed        | [pnpm](https://pnpm.io/) – Package manager                                                 |
 | [Tailwind CSS v4](https://tailwindcss.com/) – Utility-first styling   | [@preact/preset-vite](https://github.com/preactjs/preset-vite) – Preact + Vite integration |
-| [Lucide React](https://lucide.dev/) – Icon library                    |                                                                                            |
 
 ## Getting Started
 

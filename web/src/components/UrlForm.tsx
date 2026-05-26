@@ -16,6 +16,8 @@ type Props = {
   setMinutes: (value: string) => void;
 
   onSubmit: (e: React.FormEvent) => void;
+
+  loading: boolean;
 };
 
 export function UrlForm({
@@ -28,6 +30,7 @@ export function UrlForm({
   minutes,
   setMinutes,
   onSubmit,
+  loading,
 }: Props) {
   return (
     <form onSubmit={onSubmit} className="space-y-6">
@@ -51,7 +54,9 @@ export function UrlForm({
         setMinutes={setMinutes}
       />
 
-      <Button type="submit">Shorten URL</Button>
+      <Button type="submit" disabled={loading}>
+        {loading ? "Shortening..." : "Shorten URL"}
+      </Button>
     </form>
   );
 }

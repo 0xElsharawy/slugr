@@ -2,6 +2,8 @@
 
 Frontend client for [Slugr](https://github.com/0xElsharawy/slugr), a URL shortener application. Provides a minimalist dark-themed UI for creating shortened URLs with optional expiration times.
 
+![Preview](public/preview.png)
+
 ## Tech Stack
 
 | Frontend                                                              | Tooling                                                                                    |

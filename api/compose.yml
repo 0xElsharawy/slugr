@@ -19,6 +19,25 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: no
+    networks:
+      - slugr-net
+    environment:
+      REDIS_PASSWORD: "slugr_redis_password"
+    ports:
+      - "6379:6379"
+    command: >
+      sh -c "redis-server --appendonly yes
+      --requirepass $$REDIS_PASSWORD"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   postgres-data:
 

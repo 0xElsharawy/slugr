@@ -25,13 +25,9 @@ services:
     restart: no
     networks:
       - slugr-net
-    environment:
-      REDIS_PASSWORD: "slugr_redis_password"
     ports:
       - "6379:6379"
-    command: >
-      sh -c "redis-server --appendonly yes
-      --requirepass $$REDIS_PASSWORD"
+    command: ["redis-server", "--appendonly", "yes"]
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s

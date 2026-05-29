@@ -6,8 +6,12 @@ default:
 dev:
     @uv run fastapi dev --port 8080
 
+# Generate migrations
+db-generate:
+    @uv run alembic  revision --autogenerate -m "create urls table"
+
 # Migrate database
-migrate:
+db-migrate:
     @uv run alembic upgrade head
 
 up:

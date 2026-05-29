@@ -10,7 +10,6 @@ class Url(Base):
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
     url: Mapped[str] = mapped_column(Text, nullable=False)
     short_code: Mapped[str] = mapped_column(String(10), nullable=False, unique=True)
-    clicks: Mapped[int] = mapped_column(BigInteger, server_default="0", nullable=False)
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )

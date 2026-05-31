@@ -94,6 +94,5 @@ Redirect to the original URL associated with the given short code.
 | `id`         | BIGINT      | Primary key, auto-increment   |
 | `url`        | TEXT        | The original URL              |
 | `short_code` | VARCHAR(10) | Unique, generated slug        |
-| `clicks`     | BIGINT      | Click counter (default 0)     |
 | `created_at` | TIMESTAMPTZ | Auto-set on creation          |
 | `expires_at` | TIMESTAMPTZ | Nullable; set via `expire_in` |

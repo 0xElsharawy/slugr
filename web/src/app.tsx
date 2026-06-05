@@ -8,10 +8,6 @@ import { UrlForm } from "./components/UrlForm";
 export function App() {
   const [url, setUrl] = useState("");
 
-  const [days, setDays] = useState("");
-  const [hours, setHours] = useState("");
-  const [minutes, setMinutes] = useState("");
-
   const [showPopup, setShowPopup] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -26,17 +22,6 @@ export function App() {
     try {
       setLoading(true);
 
-      let expire_in = "";
-      if (days) {
-        expire_in += `${days}d`;
-      }
-      if (hours) {
-        expire_in += `${hours}h`;
-      }
-      if (minutes) {
-        expire_in += `${minutes}m`;
-      }
-
       const response = await fetch(`${backendUrl}/urls`, {
         method: "POST",
 
@@ -46,7 +31,6 @@ export function App() {
 
         body: JSON.stringify({
           url,
-          expire_in,
         }),
       });
 
@@ -75,12 +59,6 @@ export function App() {
           <UrlForm
             url={url}
             setUrl={setUrl}
-            days={days}
-            setDays={setDays}
-            hours={hours}
-            setHours={setHours}
-            minutes={minutes}
-            setMinutes={setMinutes}
             onSubmit={handleSubmit}
             loading={loading}
           />

@@ -12,7 +12,7 @@ export function Header() {
       </div>
 
       <p className="text-sm leading-relaxed text-[#a1a1a1]">
-        Shorten long URLs into clean minimal links with optional expiry.
+        Shorten long URLs into clean minimal links.
       </p>
     </div>
   );

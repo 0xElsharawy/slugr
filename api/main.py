@@ -9,7 +9,7 @@ from middlewares import logging
 from database.db import get_db
 from database.redis import get_redis
 from database.models import Url
-from utils import create_unique_slug, parse_expires_at
+from utils import create_unique_slug
 
 app = FastAPI()
 
@@ -30,7 +30,6 @@ def root():
 
 class CreateUrlRequest(BaseModel):
     url: AnyHttpUrl
-    expire_in: str | None = None
 
 
 @app.post("/urls")
@@ -42,8 +41,7 @@ def create_url(
     if url:
         return {"short_code": url.short_code}
     slug = create_unique_slug(db)
-    expires_at = parse_expires_at(payload.expire_in) if payload.expire_in else None
-    url = Url(url=str(payload.url), short_code=slug, expires_at=expires_at)
+    url = Url(url=str(payload.url), short_code=slug)
     db.add(url)
     db.commit()
     redis.set(slug, str(payload.url), ex=300)

@@ -2,6 +2,12 @@
 
 A URL shortener with a FastAPI backend and a Preact/TypeScript frontend. Shorten long URLs into 10-character alphanumeric slugs with optional expiration times.
 
+## Tech Stack
+
+**Backend:** Python 3.11+, FastAPI, SQLAlchemy, Alembic, PostgreSQL 16, Redis 7, Loguru
+
+**Frontend:** Preact, TypeScript, Tailwind CSS v4, Vite, pnpm
+
 ## Architecture
 
 ```
@@ -42,12 +48,6 @@ pnpm dev
 ```
 
 The frontend communicates with the backend at `http://localhost:8000`.
-
-## Tech Stack
-
-**Backend:** Python 3.11+, FastAPI, SQLAlchemy, Alembic, PostgreSQL 16, Redis 7, Loguru
-
-**Frontend:** Preact, TypeScript, Tailwind CSS v4, Vite, pnpm
 
 ## Web UIs
 

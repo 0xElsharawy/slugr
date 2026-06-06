@@ -1,7 +1,9 @@
+import os
 import redis
 
-REDIS_HOST = "localhost"
-REDIS_PORT = 6379
+
+REDIS_HOST = os.getenv("REDIS_HOST", "redis")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
 
 
 def get_redis():

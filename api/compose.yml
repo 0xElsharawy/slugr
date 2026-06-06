@@ -1,14 +1,17 @@
+x-defaults: &default-service
+  restart: no
+  networks:
+    - slugr-net
+
 services:
   postgres:
     image: postgres:16-alpine
     container_name: postgres
-    restart: no
-    networks:
-      - slugr-net
+    <<: *default-service
     environment:
-      POSTGRES_USER: "slugr_user"
-      POSTGRES_PASSWORD: "slugr_password"
-      POSTGRES_DB: "slugr_db"
+      POSTGRES_USER: "${DB_USER:-slugr_user}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD:-slugr_pass}"
+      POSTGRES_DB: "${DB_NAME:-slugr_db}"
     ports:
       - "5432:5432"
     volumes:
@@ -22,9 +25,7 @@ services:
   redis:
     image: redis:7-alpine
     container_name: redis
-    restart: no
-    networks:
-      - slugr-net
+    <<: *default-service
     ports:
       - "6379:6379"
     command: ["redis-server", "--appendonly", "yes"]
@@ -33,6 +34,36 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  db-migration:
+    build: .
+    container_name: slugr-db-migration
+    <<: *default-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "${DATABASE_URL}"
+    command: ["alembic", "upgrade", "head"]
+
+  api:
+    build: .
+    container_name: slugr-api
+    <<: *default-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      db-migration:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: "${DATABASE_URL}"
+      REDIS_HOST: "${REDIS_HOST:-redis}"
+      REDIS_PORT: "${REDIS_PORT:-6379}"
+    command: ["fastapi", "run", "--port", "8000"]
 
 volumes:
   postgres-data:

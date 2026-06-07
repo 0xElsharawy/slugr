@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select
@@ -9,7 +9,7 @@ from middlewares import logging
 from database.db import get_db
 from database.redis import get_redis
 from database.models import Url
-from utils import create_unique_slug
+from utils import create_unique_slug, get_client_identifier, rate_limit
 
 app = FastAPI()
 
@@ -32,10 +32,15 @@ class CreateUrlRequest(BaseModel):
     url: AnyHttpUrl
 
 
-@app.post("/urls")
-def create_url(
-    payload: CreateUrlRequest, db: Session = Depends(get_db), redis=Depends(get_redis)
+@app.post("/api/urls")
+async def create_url(
+    request: Request,
+    payload: CreateUrlRequest,
+    db: Session = Depends(get_db),
+    redis=Depends(get_redis),
 ):
+    client_id = get_client_identifier(request)
+    await rate_limit(redis, client_id)
     stmt = select(Url).where(Url.url == str(payload.url))
     url = db.execute(stmt).scalar_one_or_none()
     if url:
@@ -48,7 +53,7 @@ def create_url(
     return {"short_code": slug}
 
 
-@app.get("/{short_code}")
+@app.get("/api/{short_code}")
 def redirect(short_code: str, db: Session = Depends(get_db), redis=Depends(get_redis)):
     url = redis.get(short_code)
     if url:

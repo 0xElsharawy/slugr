@@ -4,9 +4,13 @@ A URL shortener with a FastAPI backend and a Preact/TypeScript frontend. Shorten
 
 ## Tech Stack
 
-**Backend:** Python 3.11+, FastAPI, SQLAlchemy, Alembic, PostgreSQL 16, Redis 7, Loguru
-
-**Frontend:** Preact, TypeScript, Tailwind CSS v4, Vite, pnpm
+| Backend       | Frontend        |
+| ------------- | --------------- |
+| FastAPI       | Preact          |
+| SQLAlchemy    | TypeScript      |
+| Alembic       | Tailwind CSS v4 |
+| PostgreSQL 16 | Vite            |
+| Redis 7       | pnpm            |
 
 ## Architecture
 

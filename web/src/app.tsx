@@ -17,7 +17,7 @@ export function App() {
   async function handleSubmit(e: JSX.TargetedEvent<HTMLFormElement, Event>) {
     e.preventDefault();
 
-    const backendUrl = "http://localhost:8000";
+    const backendUrl = "http://localhost:8000/api";
 
     try {
       setLoading(true);
